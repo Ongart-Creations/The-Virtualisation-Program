@@ -1,0 +1,68 @@
+﻿1.2.2.0 (??.??.???? ??:?? ????)
+- added the ability to leave the application open after deleting the current account on BankAccountManager instead of restarting the whole application [is an option on ManagerOptions enum] [Not enabled by default]
+ -> BEWARE! You have to check for the option of [ManagerResultOptions.AccountDeleted] after the manager closes otherwise the current account will still be available as "ghost" account
+- added to the BankAccountCreator tool the ability to see the username before account creation
+
+1.2.1.0 (16.05.2024 17:21 CEST)
+- added to TVP.Transactions.AccountBalanceEditor()
+ -> added the UserInfo parameter the reference indicator (ref) to only edit this object and without returning a new object
+ -> added a new BalanceInfo object to see more information about the balance after execution
+ -> added a new result if desired balance got already reached (ABResult.DesiredBalanceAlreadyReached if absolute value has been used or ABResult.MoneyDeltaZero if relative value has been used)
+- added to the BankAccountManager
+ -> added a new check to see if the action was successful or not on refreshing account balance
+  -> this includes a new message which tells the user to check their internet connection or the existence of the current account
+- added new sub namespace: Utility
+ -> moved API, Helper and LoginData to it [there is no change for public use, as this is something in the background for easier use and more sorted code]
+ -> added new sub namespace to sub-namespace Utility: Windows [not visible for public use]
+  -> added new AboutTVPWindow to see information about TVP [not directly accessible for public but from Components]
+   -> there may be content added in the future in form of new pages
+- added to TVP.Transactions.RefreshUserInfo()
+ -> added a bool return object if action was successful or not
+- added to ABResult the DeveloperUser info, which will be fired on TVP.Transactions.AccountBalanceEditor() if a dev user is given
+- fixed an issue related to applying a new balance to an account on TVP.Transactions.AccountBalanceEditor() - no decimal places were allowed -- this is now fixed
+ -> for this reason a new formatprovider culture has been added (english-US) to Components (Components.EnglishNFI)
+- fixed an endless window Open-Close loop bug on v3.Functionality.LoginToBank() and v4.Functions.LoginToBank()
+- fixed an issue related to v4 API where the Banks fetching function calls before the window handle is being created - resulted into an unhandled exception
+- fixed an issue related to v3 API if a developer user is selected - hasn't returned a developer user info object
+- fixed an issue related to UserInfo object where if v1 or v2 is selected as API, the UserInfo would not become a developer user nor a protected user [This content is directly related to the TVP.Objects.UserInfo conversion]
+- fixed an issue related to the BankAccountEditor while trying to edit your password - was not possible as the wrong inputbox was used for the check of identical passwords [used the username inputbox instead]
+- changed every NFI (NumberFormatInfo) object on TVP.Components to readonly objects
+- ENDING SUPPORT: TVP.v1 and TVP.v2 will no longer be developed, therefore no content will be added in the future -- usage will probably no longer be possible in 1.3.0.0
+
+1.2.0.0 (24.04.2024 01:20 CEST)
+- added another version of the TVP
+ -> [includes a new UserInfo object with the ability to show DeveloperAccess]
+ -> includes a new Bank UI with updated bank information (every single bank will be shown ; fetching from api)
+- added new objects for the new v4 version of TVP
+- added new enums for the new v4 version of TVP
+- added a new BankAccount Manager Tool to manage your bank account inside the TVP application
+- added a new BankAccount Creator Tool for users to create an account inside the TVP application
+- added a new BankAccount Editor Tool for users to edit information on their account like username or password
+- added to the transactions of API.v1 (TVP.v1.Transactions.Money) the transgression calculation. If amount would be over transgression the transaction will be cancelled and false will be returned
+- added to every version of the old TVP Bank Logins the newest bank "Bank of Liberty"
+- added a new Transactions object on the general TVP namespace (TVP.Transactions)
+ -> the new Transaction ability fetches/sends data from/to api | making v1 Transactions obsolete (usage will still be allowed but only until the next major release)
+- added new general UserInfo and BankInfo objects to be more transparent on account information among all versions of TVP
+ -> TVP.v3 and TVP.v4 and all new content will use the new objects
+ -> older UserInfo objects (v1, v2) will still work and will be replaced in another update -- these versions will be able to be converted explicitly into the new UserInfo object
+ -> old v1.UserInfo object will still work as the old functions still need those objects as well as v2.UserInfo
+- moved API object out of version v3 (TVP.v3.API) to general TVP namespace (TVP.API)
+- moved Bank object out of version v3 (TVP.v3.Bank) to Objects namespace (TVP.Objects.Bank)
+- changed how the API gets the return value. Changed from returntype string to returntype APIResult. It gives more information about the result
+- changed every version except of v1 of API Functionality / Functions --> removed Bank as pre-class to make access easier
+ -> this functionality got also added to the new general Transactions object (TVP.Transactions.AccountBalanceEditor)
+- updated every version of the TVP link for creating a bank account with the integrated BankAccount Creator Tool
+- changed the ability for v4 (TVP.v4) to check for protected accounts by API server check instead of set by local values "test" for username/password
+- fixed an issue with TVP.v1 BankLogin on DEVELOPER USE to close immediately as UserInfo object is not set under certain circumstances if trying to access the UserInfo object
+- ENDING SUPPORT: TVP.v1 and TVP.v2 will no longer be developed, therefore no content will be added in the future. This is the last update with changes to version1 and version2
+ -> TVP.v1 and TVP.v2 will still work for now but access to those versions will be revoked in a future update
+  -> PLEASE UPDATE YOUR APPLICATION FOR THE NEXT MAJOR UPDATE TO USE VERSION3 OR VERSION4
+ -> access will probably be revoked in content update (v1.3.0.0)
+
+1.1.4.3 (16.08.2022 03:42 CEST)
+- added ability to get banks as static method for API v3 [changed to non static and moved from TVP.v3.API to TVP.API in TVP update 1.2.0.0]
+
+1.1.4.2 (08.06.2022 16:32 CEST)
+- added ability to get the bank account number in all api versions
+- added ability to get the bank's code number in all api versions
+- renamed NFI to GermanNFI
